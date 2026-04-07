@@ -5,7 +5,7 @@ Official project website for:
 **Chart Deep Research in LVLMs via Parallel Relative Policy Optimization (PRPO)**
 
 - Venue: ICLR 2026 (Accepted)
-- Project page: https://prpo.github.io
+- Project page: https://toneyaya.github.io/project.prpo
 - Paper (arXiv): https://arxiv.org/abs/2603.06677v1
 
 ## Repository Overview
