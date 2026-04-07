@@ -14,6 +14,10 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -41,12 +45,20 @@
           objective chart deep-research evaluation.
         </p>
         <div class="authors-inline">
-          <span>Author A*</span>
-          <span>Author B*</span>
-          <span>Author C</span>
-          <span>Author D</span>
+          <span>Jiajin Tang<sup>1,2</sup></span>
+          <span>Gaoyang<sup>1</sup></span>
+          <span>Wenjie Wang<sup>2</sup></span>
+          <span>Sibei Yang<sup>3</sup></span>
+          <span>Xing Chen<sup>1</sup></span>
         </div>
-        <p class="note">* Equal contribution. Replace placeholders with your final author list.</p>
+        <p class="note">
+          <sup>1</sup>ByteDance, <sup>2</sup>ShanghaiTech University,
+          <sup>3</sup>School of Computer Science and Engineering, Sun Yat-sen University
+        </p>
+        <p class="note">
+          Notes: Work done during internship at ByteDance (Jiajin Tang); project lead: Gaoyang;
+          corresponding author: Sibei Yang.
+        </p>
         <div class="hero-actions">
           <a class="button primary" href="#results">Main Results</a>
           <a class="button" href="#method">Method</a>
@@ -71,6 +83,16 @@
           hard-to-scale open-ended assessment. PRPO and MCDR-Bench are designed to resolve these two
           bottlenecks jointly.
         </p>
+        <div class="panel subpanel">
+          <img
+            src="assets/reward-motivation.png"
+            alt="Appendix reward analysis showing GRPO scalar aggregation vs PRPO reward-wise optimization."
+          />
+          <p class="caption">
+            Motivation from Appendix (Figure 1): scalar reward aggregation in GRPO weakens reward
+            variance and advantage discrimination, while PRPO preserves dimension-specific signals.
+          </p>
+        </div>
       </section>
 
       <section class="container panel reveal">
@@ -125,6 +147,27 @@
           </article>
         </div>
         <div class="panel subpanel">
+          <h3>Core Formulation</h3>
+          <p>PRPO keeps both reward-dimension and data-partition structure during optimization:</p>
+          <p class="equation">
+            $$\hat{A}_i^{(k,m)} = \frac{R_i^{(k)} - \bar{R}^{(k,m)}}{\sigma^{(k,m)}}$$
+          </p>
+          <p class="equation">
+            $$J_{\mathrm{PRPO}}(\theta)=\sum_{m=1}^{M_{\mathrm{final}}}\lambda_m\sum_{k=1}^{K}\lambda_k\,\mathbb{E}\left[\frac{1}{|\mathcal{G}_m|}\sum_{i\in\mathcal{G}_m}\frac{1}{|o_i|}\sum_{t=1}^{|o_i|}L_{\mathrm{clip}}\big(r_{i,t}(\theta),\hat{A}_i^{(k,m)}\big)\right]$$
+          </p>
+          <p class="caption">
+            This unifies Reward-PRPO and Data-PRPO: no scalar reward collapse, and no blind mixing
+            of heterogeneous capability data.
+          </p>
+        </div>
+        <div class="panel subpanel">
+          <img src="assets/prpo-framework.png" alt="PRPO framework diagram from the paper." />
+          <p class="caption">
+            PRPO framework: reward-wise decomposition + capability-wise grouping with iterative
+            outlier relegation.
+          </p>
+        </div>
+        <div class="panel subpanel">
           <img src="assets/training.svg" alt="Training dynamics comparison between GRPO and PRPO." />
           <p class="caption">
             PRPO demonstrates better early exploration and stronger late-stage stability than GRPO,
@@ -145,6 +188,43 @@
           It follows a two-phase protocol: (1) multi-agent deep report generation over complex
           charts, and (2) targeted error injection to build fine-grained objective evaluation tasks.
         </p>
+        <div class="panel subpanel">
+          <img src="assets/mcdr-framework.png" alt="MCDR-Bench construction framework from the paper." />
+          <p class="caption">
+            MCDR-Bench framework with five capability stages: background acquisition, fact
+            extraction, relationship construction, deep report generation, and forecast/plan.
+          </p>
+        </div>
+        <div class="creation-grid">
+          <article class="card">
+            <h3>Step 1: Chart Collection</h3>
+            <p>
+              Curate complex charts from Dashboard Design Patterns, MME-realworld, ChartQAPRO,
+              and Pew Research, then filter out low-complexity charts.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Step 2: Report Generation</h3>
+            <p>
+              Build deep-research reports via a five-stage multi-agent pipeline with human checks
+              at report and decision phases.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Step 3: Error Injection</h3>
+            <p>
+              Inject targeted errors for BG/FE/RL/DR/F/P to convert subjective generation
+              assessment into objective error identification.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Step 4: Evaluation</h3>
+            <p>
+              Evaluate fine-grained capability weaknesses with objective discriminative tasks over
+              3,084 hard samples.
+            </p>
+          </article>
+        </div>
         <div class="stats">
           <div>
             <p class="num">1,021</p>
@@ -279,26 +359,26 @@
 
       <section id="authors" class="container panel reveal">
         <h2>Authors & Affiliations</h2>
-        <p>
-          Replace the placeholder author list below with your final camera-ready names and email
-          addresses.
-        </p>
         <div class="author-grid">
           <article class="author-card">
-            <h3>Author A</h3>
-            <p>Sun Yat-sen University</p>
+            <h3>Jiajin Tang</h3>
+            <p>ByteDance; ShanghaiTech University</p>
           </article>
           <article class="author-card">
-            <h3>Author B</h3>
+            <h3>Gaoyang</h3>
+            <p>ByteDance</p>
+          </article>
+          <article class="author-card">
+            <h3>Wenjie Wang</h3>
             <p>ShanghaiTech University</p>
           </article>
           <article class="author-card">
-            <h3>Author C</h3>
-            <p>ByteDance Seed</p>
+            <h3>Sibei Yang</h3>
+            <p>Sun Yat-sen University</p>
           </article>
           <article class="author-card">
-            <h3>Author D</h3>
-            <p>Sun Yat-sen University</p>
+            <h3>Xing Chen</h3>
+            <p>ByteDance</p>
           </article>
         </div>
         <div class="affiliation-logos">
@@ -333,7 +413,7 @@
         <h2>Citation</h2>
         <pre><code>@inproceedings{prpo2026,
   title={Chart Deep Research in LVLMs via Parallel Relative Policy Optimization},
-        author={Author A and Author B and Author C and Author D},
+        author={Jiajin Tang and Gaoyang and Wenjie Wang and Sibei Yang and Xing Chen},
   booktitle={International Conference on Learning Representations},
   year={2026}
 }</code></pre>
@@ -345,6 +425,15 @@
       <p>Last updated: 2026-04-07</p>
     </footer>
 
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+      onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '\\(', right: '\\)', display: false}]});"
+    ></script>
     <script src="script.js"></script>
   </body>
 </html>

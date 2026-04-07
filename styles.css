@@ -179,6 +179,14 @@ h2 {
   color: var(--ink-soft);
 }
 
+.equation {
+  margin: 0.7rem 0;
+  padding: 0.45rem 0.7rem;
+  border-left: 3px solid var(--accent);
+  background: rgba(255, 255, 255, 0.62);
+  overflow-x: auto;
+}
+
 .cards-3 {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -209,6 +217,12 @@ h2 {
 
 .subpanel {
   margin-top: 0.9rem;
+}
+
+.subpanel h3 {
+  margin-top: 0;
+  margin-bottom: 0.4rem;
+  font-family: "IBM Plex Serif", serif;
 }
 
 .subpanel img {
@@ -270,6 +284,13 @@ h2 {
   margin-top: 0;
 }
 
+.creation-grid {
+  margin-top: 0.85rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.72rem;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -299,7 +320,7 @@ pre {
 
 .author-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 0.72rem;
 }
 
@@ -366,6 +387,7 @@ pre {
 
   .cards-3,
   .stats,
+  .creation-grid,
   .author-grid,
   .affiliation-logos {
     grid-template-columns: 1fr;
